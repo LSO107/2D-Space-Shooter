@@ -563,7 +563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &701735455
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -771,7 +771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1031907059
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1072,6 +1072,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7374860485226328658, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 8561770148594771725, guid: 972049db716082248b53abf702627fc2,
         type: 3}
       propertyPath: m_Name
@@ -1234,6 +1239,51 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 7374860485226328663, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374860485226328663, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374860485226328662, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.7607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374860485226328662, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.7607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374860485226328662, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.7607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374860485226328662, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_DrawMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374860485506844148, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyChild
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374860486019363729, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyChild
+      objectReference: {fileID: 0}
+    - target: {fileID: 7374860486040531993, guid: 972049db716082248b53abf702627fc2,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyChild
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 972049db716082248b53abf702627fc2, type: 3}
 --- !u!1 &2010709283

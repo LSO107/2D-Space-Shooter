@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Health_System;
+using UnityEngine;
 
 internal sealed class Projectile : MonoBehaviour
 {
@@ -6,10 +7,11 @@ internal sealed class Projectile : MonoBehaviour
     private Sprite projectileSprite;
     [SerializeField]
     private float maxTimeToLive = 6f;
+    
     [SerializeField]
-    private float projectileSpeed = 2f;
-    [SerializeField]
-    private bool enemyProjectile;
+    private Vector2 m_InitialVelocity;
+
+    private Camera m_MainCamera;
 
     private Rigidbody2D m_Rb;
     private SpriteRenderer m_SpriteRenderer;
@@ -22,6 +24,9 @@ internal sealed class Projectile : MonoBehaviour
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
         m_SpriteRenderer.sprite = projectileSprite;
+        m_MainCamera = Camera.main;
+
+        SetVelocity();
     }
 
     // Projectile has a set time to live
@@ -29,10 +34,15 @@ internal sealed class Projectile : MonoBehaviour
     //
     private void Update()
     {
-        FireProjectile();
+        // Destroy ourselves if we have gone off screen
+        if (!IsOnScreen())
+        {
+            Destroy(gameObject);
+        }
 
         m_Timer += Time.deltaTime;
 
+        // Destroy ourselves if we have run out of time
         if (m_Timer >= maxTimeToLive)
         {
             Destroy(gameObject);
@@ -42,34 +52,53 @@ internal sealed class Projectile : MonoBehaviour
     /// <summary>
     /// Sends the projectile using direction and speed
     /// </summary>
-    private void FireProjectile()
+    private void SetVelocity()
     {
-        if (enemyProjectile)
-        {
-            m_Rb.velocity = Vector3.down * projectileSpeed;
-        }
-        else
-        {
-            m_Rb.velocity = Vector2.up * projectileSpeed;
-        }
+        m_Rb.velocity = m_InitialVelocity;
     }
 
     // If projectile collides with enemy, player or 
     // another projectile, destroy the projectile instance
+    // and tell whatever we collided with to handle its own
+    // bullet collision logic
     //
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Projectile"))
+        if (other.gameObject.CompareTag("Enemy"))
+            return;
+
+        if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject, 0.1f);
+            var playerHealth = other.GetComponent<PlayerHealth>();
+            playerHealth.HandleBulletCollision();
         }
+
+        if (other.gameObject.CompareTag("EnemyChild"))
+        {
+            var healthObject = other.GetComponent<HealthObject>();
+            healthObject.HandleBulletCollision();
+        }
+
+        if (other.gameObject.CompareTag("Projectile"))
+        {
+            Destroy(other);
+        }
+
+        Destroy(gameObject);
     }
 
-    // Destroys the gameObject (projectile) if it
-    // leaves the camera view.
-    //
-    private void OnBecameInvisible()
+    private bool IsOnScreen()
     {
-        Destroy(gameObject);
+        var position = transform.position;
+
+        // Get coordinates on the screen between 0 and 1
+        // ensures this method will work consistently on all resolutions
+        var screenCoordinates = m_MainCamera.WorldToViewportPoint(position);
+
+        // Check the returned coordinates to see if we're on screen
+        return screenCoordinates.x < 1
+            && screenCoordinates.x > 0
+            && screenCoordinates.y < 1
+            && screenCoordinates.y > 0;
     }
 }

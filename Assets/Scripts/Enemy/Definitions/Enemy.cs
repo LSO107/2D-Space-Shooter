@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Extensions;
+using UnityEngine;
 
 namespace Enemy.Definitions
 {
@@ -13,16 +14,31 @@ namespace Enemy.Definitions
         [SerializeField]
         private GameObject firePoint;
 
+        private Camera m_MainCamera;
+
         private float m_HorizontalMovement;
         private float m_VerticalMovement;
 
-        private Vector2 m_Direction = Vector2.left;
+        private bool m_IsMovingLeft;
 
         private bool m_CanFire = true;
+
+        private BoxCollider2D m_BoxCollider;
+        private float m_HalfWidth;
+
+        private void Start()
+        {
+            m_BoxCollider = GetComponent<BoxCollider2D>();
+            m_HalfWidth = m_BoxCollider.GetHalfWidth();
+
+            m_MainCamera = Camera.main;
+        }
 
         private void Update()
         {
             Movement();
+            // Call out of bounds check here
+            HandleOutOfBoundsChecks();
 
             if (m_CanFire)
             {
@@ -30,26 +46,22 @@ namespace Enemy.Definitions
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void HandleOutOfBoundsChecks()
         {
-            if (other.gameObject.CompareTag("Right Barrier"))
+            if(!m_MainCamera.FitsOnScreen(transform.position, m_HalfWidth))
             {
-                m_Direction = Vector2.right;
-            }
-            else if (other.gameObject.CompareTag("Left Barrier"))
-            {
-                m_Direction = Vector2.left;
+                m_IsMovingLeft = !m_IsMovingLeft;
             }
         }
 
         private void Movement()
         {
-            if (m_Direction == Vector2.left)
+            if (m_IsMovingLeft)
             {
                 m_HorizontalMovement = -movementSpeed * Time.deltaTime;
                 transform.Translate(m_HorizontalMovement, m_VerticalMovement, 0);
             }
-            else if (m_Direction == Vector2.right)
+            else
             {
                 m_HorizontalMovement = movementSpeed * Time.deltaTime;
                 transform.Translate(m_HorizontalMovement, m_VerticalMovement, 0);

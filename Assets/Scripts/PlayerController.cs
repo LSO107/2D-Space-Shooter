@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Extensions;
 using UnityEngine;
 
 internal sealed class PlayerController : MonoBehaviour
@@ -16,11 +17,20 @@ internal sealed class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject firePoint;
 
+    private Camera m_MainCamera;
+    private float m_HalfWidth;
+
     private bool m_CanFire = true;
+
+    private void Start()
+    {
+        m_MainCamera = Camera.main;
+        var box = GetComponent<BoxCollider2D>();
+        m_HalfWidth = box.GetHalfWidth();
+    }
 
     private void Update()
     {
-        Direction();
         Movement();
 
         if (Input.GetKey(KeyCode.Space) && m_CanFire)
@@ -34,32 +44,26 @@ internal sealed class PlayerController : MonoBehaviour
     /// </summary>
     private void Movement()
     {
-        if (m_Direction == Vector2.left)
-        {
-            m_HorizontalMovement = -movementSpeed * Time.deltaTime;
-            transform.Translate(m_HorizontalMovement, m_VerticalMovement, 0);
-        }
-        else if (m_Direction == Vector2.right)
-        {
-            m_HorizontalMovement = movementSpeed * Time.deltaTime;
-            transform.Translate(m_HorizontalMovement, m_VerticalMovement, 0);
-        }
-    }
-
-    /// <summary>
-    /// Checks the direction based on the player input
-    /// </summary>
-    private void Direction()
-    {
-        m_Direction = Vector2.zero;
-
+        var pos = transform.position;
         if (Input.GetKey(KeyCode.D)) // Right
         {
-            m_Direction += Vector2.right;
+            var movement = movementSpeed * Time.deltaTime;
+            var newPos = new Vector2(pos.x + movement, pos.y);
+
+            if(m_MainCamera.FitsOnScreen(newPos, m_HalfWidth))
+            {
+                transform.Translate(movement, m_VerticalMovement, 0);
+            }
         }
         else if (Input.GetKey(KeyCode.A)) // Left
         {
-            m_Direction += Vector2.left;
+            var movement = -movementSpeed * Time.deltaTime;
+            var newPos = new Vector2(pos.x + movement, pos.y);
+
+            if (m_MainCamera.FitsOnScreen(newPos, m_HalfWidth))
+            {
+                transform.Translate(movement, m_VerticalMovement, 0);
+            }
         }
     }
 
@@ -78,7 +82,7 @@ internal sealed class PlayerController : MonoBehaviour
     /// </summary>
     private IEnumerator FireDelay()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.05f);
         m_CanFire = true;
     }
 }

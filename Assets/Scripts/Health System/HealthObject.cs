@@ -124,14 +124,10 @@ namespace Health_System
         // Ensure colliding object is "Projectile".
         // Handles damage and resets timers.
         //
-        private void OnTriggerEnter2D(Collider2D other)
+
+        public void HandleBulletCollision()
         {
             if (!m_CanBeDamaged)
-            {
-                return;
-            }
-
-            if (!other.gameObject.CompareTag("Projectile"))
             {
                 return;
             }

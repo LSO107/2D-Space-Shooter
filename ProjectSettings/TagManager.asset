@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Left Barrier
   - Right Barrier
+  - EnemyChild
   layers:
   - Default
   - TransparentFX

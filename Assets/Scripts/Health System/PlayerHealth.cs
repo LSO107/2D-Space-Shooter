@@ -30,12 +30,9 @@ namespace Health_System
             Debug.Log($"Player Health: {healthNode.CurrentHealth} / {healthNode.MaxHealth}");
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public void HandleBulletCollision()
         {
-            if (other.gameObject.CompareTag("Projectile"))
-            {
-                healthNode.Damage();
-            }
+            healthNode.Damage();
 
             if (healthNode.IsDead)
             {
