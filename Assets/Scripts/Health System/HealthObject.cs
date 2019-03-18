@@ -9,6 +9,7 @@ namespace Health_System
     internal class HealthObject : MonoBehaviour
     {
         public HealthNode healthNode;
+        private CollectiveHealthObject m_CollectiveHealthObject;
 
         [SerializeField]
         private EnemySize enemySize;
@@ -36,6 +37,8 @@ namespace Health_System
         {
             var health = GetMaxHealth();
             healthNode = new HealthNode(health, health);
+
+            m_CollectiveHealthObject = GetComponentInParent<CollectiveHealthObject>();
 
             if (isRootNode)
             {
@@ -124,7 +127,6 @@ namespace Health_System
         // Ensure colliding object is "Projectile".
         // Handles damage and resets timers.
         //
-
         public void HandleBulletCollision()
         {
             if (!m_CanBeDamaged)
@@ -154,7 +156,18 @@ namespace Health_System
         private void HandleDamage()
         {
             m_CanBeDamaged = false;
-            healthNode.Damage();
+
+            //healthNode.Damage();
+            //m_CollectiveHealthObject.collectiveHealthSystem.DamageCollective();
+
+            if (healthNode.IsRootNode)
+            {
+                m_CollectiveHealthObject.collectiveHealthSystem.DamageCollective();
+            }
+            else
+            {
+                healthNode.Damage();
+            }
 
             if (healthNode.IsDead)
             {

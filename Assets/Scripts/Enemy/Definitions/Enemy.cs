@@ -46,6 +46,11 @@ namespace Enemy.Definitions
             }
         }
 
+        /// <summary>
+        /// Checks that the length of the collider can fit on the screen,
+        /// if it reaches the edge then we set the movement in the
+        /// opposite direction.
+        /// </summary>
         private void HandleOutOfBoundsChecks()
         {
             if(!m_MainCamera.FitsOnScreen(transform.position, m_HalfWidth))

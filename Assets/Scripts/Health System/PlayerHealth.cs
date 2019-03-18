@@ -30,6 +30,10 @@ namespace Health_System
             Debug.Log($"Player Health: {healthNode.CurrentHealth} / {healthNode.MaxHealth}");
         }
 
+        /// <summary>
+        /// Damages health by default amount,
+        /// handles death.
+        /// </summary>
         public void HandleBulletCollision()
         {
             healthNode.Damage();

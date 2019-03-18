@@ -9,7 +9,7 @@ internal sealed class Projectile : MonoBehaviour
     private float maxTimeToLive = 6f;
     
     [SerializeField]
-    private Vector2 m_InitialVelocity;
+    private Vector2 initialVelocity;
 
     private Camera m_MainCamera;
 
@@ -54,7 +54,7 @@ internal sealed class Projectile : MonoBehaviour
     /// </summary>
     private void SetVelocity()
     {
-        m_Rb.velocity = m_InitialVelocity;
+        m_Rb.velocity = initialVelocity;
     }
 
     // If projectile collides with enemy, player or 

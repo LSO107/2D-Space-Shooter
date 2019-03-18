@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Enemy\Definitions\EnemyType.cs" />
     <Compile Include="Assets\Scripts\Extensions\CameraExtensions.cs" />
     <Compile Include="Assets\Scripts\Extensions\Collider2DExtensions.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Health System\CollectiveHealthObject.cs" />
     <Compile Include="Assets\Scripts\Health System\Definitions\CollectiveHealthSystem.cs" />
     <Compile Include="Assets\Scripts\Health System\Definitions\HealthNode.cs" />

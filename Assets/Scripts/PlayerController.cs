@@ -82,7 +82,7 @@ internal sealed class PlayerController : MonoBehaviour
     /// </summary>
     private IEnumerator FireDelay()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.01f);
         m_CanFire = true;
     }
 }

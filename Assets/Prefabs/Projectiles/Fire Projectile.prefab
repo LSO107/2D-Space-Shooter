@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSprite: {fileID: 21300014, guid: 8aeb9e233fbb8f14db39770841b78b94, type: 3}
-  maxTimeToLive: 6
-  m_InitialVelocity: {x: 0, y: -4}
+  maxTimeToLive: 3
+  initialVelocity: {x: 0, y: -10}
 --- !u!58 &3064312562160924699
 CircleCollider2D:
   m_ObjectHideFlags: 0
